@@ -1,25 +1,36 @@
 const express = require("express");
+const { adminAuth, userAuth } = require("./middlewares/auth");
 const app = express();
+
+app.use("/admin", adminAuth);
 
 app.get(
   "/user",
-  [
-    (req, res, next) => {
-      next();
-      // res.send("Route Handler 1");
-    },
-    (req, res, next) => {
-      // res.send("2");
-      next();
-    },
-  ],
+  userAuth,
+
   (req, res, next) => {
-    // res.send("3");
-    next();
-  },
+    res.send("user data sent");
+  }
+);
+app.get(
+  "/user/login",
+
   (req, res, next) => {
-    res.send("4");
-    // next();
+    res.send("please log in");
+  }
+);
+app.get(
+  "/admin/getAllData",
+
+  (req, res, next) => {
+    res.send("all data sent");
+  }
+);
+app.get(
+  "/admin/deleteAllData",
+
+  (req, res, next) => {
+    res.send("All data deleted");
   }
 );
 
